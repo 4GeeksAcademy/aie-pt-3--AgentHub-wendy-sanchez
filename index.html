@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgentHub Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+              mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+            },
+            maxWidth: {
+              panel: "1440px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-slate-50 font-sans text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div class="min-h-screen md:flex">
+      <div id="mobileSidebarBackdrop" class="fixed inset-0 z-30 hidden bg-slate-900/40 md:hidden"></div>
+
+      <aside
+        id="sidebar"
+        class="fixed inset-y-0 left-0 z-40 w-[260px] -translate-x-full border-r border-slate-200 bg-white/95 p-4 transition-transform duration-300 dark:border-slate-800 dark:bg-slate-900/95 md:static md:translate-x-0"
+      >
+        <div class="mb-6 flex items-center gap-2 rounded-xl bg-blue-50 px-3 py-2 dark:bg-blue-900/30">
+          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">AI</div>
+          <div>
+            <p class="text-sm font-semibold">AgentHub</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Panel Operativo</p>
+          </div>
+        </div>
+
+        <nav class="space-y-1" aria-label="Navegacion principal">
+          <a href="#dashboard" data-nav-link class="block rounded-lg border-l-4 border-transparent px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Dashboard</a>
+          <a href="#usuarios" data-nav-link class="block rounded-lg border-l-4 border-transparent px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Gestion de usuarios</a>
+          <a href="#agentes" data-nav-link class="block rounded-lg border-l-4 border-transparent px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Gestion de agentes</a>
+          <a href="#skills" data-nav-link class="block rounded-lg border-l-4 border-transparent px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Skills</a>
+          <a href="#contrataciones" data-nav-link class="block rounded-lg border-l-4 border-transparent px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Contrataciones de agentes</a>
+          <a href="#errores" data-nav-link class="block rounded-lg border-l-4 border-transparent px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Log de errores</a>
+        </nav>
+      </aside>
+
+      <div class="flex-1 md:min-w-0">
+        <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
+          <div class="mx-auto flex w-full max-w-panel items-center justify-between gap-4 px-4 py-3 md:px-6">
+            <div class="flex items-center gap-3">
+              <button id="openSidebarBtn" class="rounded-lg border border-slate-200 p-2 text-slate-700 dark:border-slate-700 dark:text-slate-200 md:hidden" aria-label="Abrir navegacion">
+                <span aria-hidden="true">☰</span>
+              </button>
+              <div>
+                <p class="text-xs uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400">AgentHub System</p>
+                <h1 id="activeSectionTitle" class="text-xl font-semibold">Dashboard</h1>
+              </div>
+            </div>
+            <button id="themeToggle" class="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800" aria-label="Cambiar modo oscuro">
+              <span id="themeIcon" aria-hidden="true">🌙</span>
+              <span id="themeLabel">Modo oscuro</span>
+            </button>
+          </div>
+        </header>
+
+        <main class="mx-auto w-full max-w-panel space-y-6 px-4 py-6 md:px-6">
+          <section id="dashboard" data-section="Dashboard" class="scroll-mt-24 space-y-4">
+            <h2 class="text-2xl font-semibold">Dashboard</h2>
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="mb-3 h-1 w-16 rounded-full bg-blue-600"></div>
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-slate-500 dark:text-slate-400">Ingresos totales</p>
+                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-lg text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" aria-hidden="true">💳</span>
+                </div>
+                <p class="mt-2 text-3xl font-bold">$128,450</p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="mb-3 h-1 w-16 rounded-full bg-amber-500"></div>
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-slate-500 dark:text-slate-400">Perdidas por descuentos</p>
+                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-lg text-amber-700 dark:bg-amber-900/30 dark:text-amber-300" aria-hidden="true">🏷️</span>
+                </div>
+                <p class="mt-2 text-3xl font-bold">$6,930</p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="mb-3 h-1 w-16 rounded-full bg-emerald-600"></div>
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-slate-500 dark:text-slate-400">Agentes activos</p>
+                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-lg text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300" aria-hidden="true">🤖</span>
+                </div>
+                <p class="mt-2 text-3xl font-bold">37</p>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="mb-3 h-1 w-16 rounded-full bg-rose-600"></div>
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-slate-500 dark:text-slate-400">Agentes fallando</p>
+                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-lg text-rose-700 dark:bg-rose-900/30 dark:text-rose-300" aria-hidden="true">⚠️</span>
+                </div>
+                <p class="mt-2 text-3xl font-bold">4</p>
+              </article>
+            </div>
+
+            <article class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <div class="mb-6 flex items-center justify-between gap-4">
+                <div>
+                  <h3 class="text-lg font-semibold">Actividad semanal</h3>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">Interacciones procesadas por los agentes durante los ultimos 7 dias.</p>
+                </div>
+                <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">+12.4%</span>
+              </div>
+              <div class="rounded-xl bg-slate-50 p-4 dark:bg-slate-800/40">
+                <div class="flex h-64 items-end gap-3 md:gap-4">
+                  <div class="flex flex-1 flex-col items-center gap-3">
+                    <div class="w-full rounded-t-lg bg-blue-200 dark:bg-blue-900/40">
+                      <div class="h-24 rounded-t-lg bg-blue-600"></div>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Lun</span>
+                  </div>
+                  <div class="flex flex-1 flex-col items-center gap-3">
+                    <div class="w-full rounded-t-lg bg-blue-200 dark:bg-blue-900/40">
+                      <div class="h-32 rounded-t-lg bg-blue-600"></div>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Mar</span>
+                  </div>
+                  <div class="flex flex-1 flex-col items-center gap-3">
+                    <div class="w-full rounded-t-lg bg-blue-200 dark:bg-blue-900/40">
+                      <div class="h-20 rounded-t-lg bg-blue-600"></div>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Mie</span>
+                  </div>
+                  <div class="flex flex-1 flex-col items-center gap-3">
+                    <div class="w-full rounded-t-lg bg-blue-200 dark:bg-blue-900/40">
+                      <div class="h-40 rounded-t-lg bg-blue-600"></div>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Jue</span>
+                  </div>
+                  <div class="flex flex-1 flex-col items-center gap-3">
+                    <div class="w-full rounded-t-lg bg-blue-200 dark:bg-blue-900/40">
+                      <div class="h-48 rounded-t-lg bg-blue-600"></div>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Vie</span>
+                  </div>
+                  <div class="flex flex-1 flex-col items-center gap-3">
+                    <div class="w-full rounded-t-lg bg-blue-200 dark:bg-blue-900/40">
+                      <div class="h-28 rounded-t-lg bg-blue-600"></div>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Sab</span>
+                  </div>
+                  <div class="flex flex-1 flex-col items-center gap-3">
+                    <div class="w-full rounded-t-lg bg-blue-200 dark:bg-blue-900/40">
+                      <div class="h-36 rounded-t-lg bg-blue-600"></div>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Dom</span>
+                  </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                  <span>0</span>
+                  <span>250</span>
+                  <span>500</span>
+                  <span>750</span>
+                  <span>1000</span>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section id="usuarios" data-section="Gestion de usuarios" class="scroll-mt-24 space-y-4">
+            <h2 class="text-2xl font-semibold">Gestion de usuarios</h2>
+            <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <table class="min-w-full text-left text-sm">
+                <thead class="bg-slate-100 text-xs uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                  <tr>
+                    <th class="px-4 py-3">Nombre</th>
+                    <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Plan</th>
+                    <th class="px-4 py-3">Estado</th>
+                    <th class="px-4 py-3 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">Wendy Sanchez</td>
+                    <td class="px-4 py-3">wendy@agencylabs.io</td>
+                    <td class="px-4 py-3">Enterprise</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">Activo</span></td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-usuario" data-id="u1" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="eliminar" data-id="u1" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">Diego Rivas</td>
+                    <td class="px-4 py-3">diego@orbitcorp.app</td>
+                    <td class="px-4 py-3">Pro</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">Activo</span></td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-usuario" data-id="u2" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="eliminar" data-id="u2" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">Sofia Marin</td>
+                    <td class="px-4 py-3">sofia@northmetrics.net</td>
+                    <td class="px-4 py-3">Starter</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">Pendiente</span></td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-usuario" data-id="u3" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="eliminar" data-id="u3" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">Camilo Vega</td>
+                    <td class="px-4 py-3">camilo@contoso.dev</td>
+                    <td class="px-4 py-3">Enterprise</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Inactivo</span></td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-usuario" data-id="u4" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="eliminar" data-id="u4" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">Lucia Aranda</td>
+                    <td class="px-4 py-3">lucia@hexacloud.ai</td>
+                    <td class="px-4 py-3">Pro</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">Activo</span></td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-usuario" data-id="u5" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="eliminar" data-id="u5" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="agentes" data-section="Gestion de agentes" class="scroll-mt-24 space-y-4">
+            <h2 class="text-2xl font-semibold">Gestion de agentes</h2>
+            <div class="grid gap-4 lg:grid-cols-2">
+              <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 class="font-semibold">Aegis Support Bot</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Propietario: Wendy Sanchez</p>
+                    <span class="mt-2 inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">Activo</span>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                    <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                      <button data-action="configurar-agente" data-id="a1" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Configurar</button>
+                      <button data-action="eliminar" data-id="a1" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+                <button data-collapse-button data-target="skills-a1" class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-700 dark:text-blue-300">
+                  <span>Skills</span>
+                  <span data-collapse-icon class="transition-transform">⌄</span>
+                </button>
+                <div id="skills-a1" class="max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+                  <ul class="mt-2 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                    <li>- Triage de tickets</li>
+                    <li>- Resumen de incidentes</li>
+                    <li>- Escalamiento automatico</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 class="font-semibold">Nexus Sales Copilot</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Propietario: Diego Rivas</p>
+                    <span class="mt-2 inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">Activo</span>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                    <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                      <button data-action="configurar-agente" data-id="a2" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Configurar</button>
+                      <button data-action="eliminar" data-id="a2" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+                <button data-collapse-button data-target="skills-a2" class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-700 dark:text-blue-300">
+                  <span>Skills</span>
+                  <span data-collapse-icon class="transition-transform">⌄</span>
+                </button>
+                <div id="skills-a2" class="max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+                  <ul class="mt-2 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                    <li>- Outreach personalizado</li>
+                    <li>- Scoring de leads</li>
+                    <li>- Seguimiento multicanal</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 class="font-semibold">Sentinel Ops Analyst</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Propietario: Sofia Marin</p>
+                    <span class="mt-2 inline-block rounded-full bg-rose-100 px-2 py-1 text-xs font-semibold text-rose-700 dark:bg-rose-900/30 dark:text-rose-300">Fallando</span>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                    <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                      <button data-action="configurar-agente" data-id="a3" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Configurar</button>
+                      <button data-action="eliminar" data-id="a3" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+                <button data-collapse-button data-target="skills-a3" class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-700 dark:text-blue-300">
+                  <span>Skills</span>
+                  <span data-collapse-icon class="transition-transform">⌄</span>
+                </button>
+                <div id="skills-a3" class="max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+                  <ul class="mt-2 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                    <li>- Monitoreo de anomalias</li>
+                    <li>- Alertas de SLA</li>
+                    <li>- Diagnostico de logs</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 class="font-semibold">Atlas Finance Advisor</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Propietario: Camilo Vega</p>
+                    <span class="mt-2 inline-block rounded-full bg-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Inactivo</span>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                    <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                      <button data-action="configurar-agente" data-id="a4" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Configurar</button>
+                      <button data-action="eliminar" data-id="a4" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+                <button data-collapse-button data-target="skills-a4" class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-700 dark:text-blue-300">
+                  <span>Skills</span>
+                  <span data-collapse-icon class="transition-transform">⌄</span>
+                </button>
+                <div id="skills-a4" class="max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+                  <ul class="mt-2 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                    <li>- Forecast financiero</li>
+                    <li>- Riesgo de caja</li>
+                    <li>- Simulacion de precios</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section id="skills" data-section="Skills" class="scroll-mt-24 space-y-4">
+            <h2 class="text-2xl font-semibold">Skills</h2>
+            <article class="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-900 dark:border-blue-900/50 dark:bg-blue-900/20 dark:text-blue-200">
+              En AgentHub, una skill es una capacidad modular reutilizable que se habilita en uno o varios agentes para resolver tareas concretas como triage, monitoreo, ventas o analitica operacional.
+            </article>
+
+            <div class="grid gap-4 md:grid-cols-2">
+              <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h3 class="font-semibold">Triage de tickets</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Clasifica y prioriza solicitudes de soporte automaticamente.</p>
+                    <span class="mt-2 inline-block rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">3 agentes</span>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                    <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                      <button data-action="ver-skill" data-id="s1" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                      <button data-action="eliminar-skill" data-id="s1" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h3 class="font-semibold">Scoring de leads</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Asigna puntaje de conversion segun comportamiento comercial.</p>
+                    <span class="mt-2 inline-block rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">2 agentes</span>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                    <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                      <button data-action="ver-skill" data-id="s2" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                      <button data-action="eliminar-skill" data-id="s2" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h3 class="font-semibold">Monitoreo de anomalias</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Detecta desviaciones operativas y genera alertas tempranas.</p>
+                    <span class="mt-2 inline-block rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">4 agentes</span>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                    <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                      <button data-action="ver-skill" data-id="s3" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                      <button data-action="eliminar-skill" data-id="s3" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h3 class="font-semibold">Forecast financiero</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Proyecta ingresos y costos por cliente y contrato.</p>
+                    <span class="mt-2 inline-block rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">1 agente</span>
+                  </div>
+                  <div class="relative inline-block text-left">
+                    <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                    <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                      <button data-action="ver-skill" data-id="s4" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                      <button data-action="eliminar-skill" data-id="s4" class="block w-full rounded-md px-3 py-2 text-left text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section id="contrataciones" data-section="Contrataciones de agentes" class="scroll-mt-24 space-y-4">
+            <h2 class="text-2xl font-semibold">Contrataciones de agentes</h2>
+            <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <table class="min-w-full text-left text-sm">
+                <thead class="bg-slate-100 text-xs uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                  <tr>
+                    <th class="px-4 py-3">Cliente</th>
+                    <th class="px-4 py-3">Agente</th>
+                    <th class="px-4 py-3">Skills</th>
+                    <th class="px-4 py-3">Inicio</th>
+                    <th class="px-4 py-3">Fin</th>
+                    <th class="px-4 py-3">Importe</th>
+                    <th class="px-4 py-3 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">Orbit Corp</td>
+                    <td class="px-4 py-3">Nexus Sales Copilot</td>
+                    <td class="px-4 py-3">Scoring, Outreach, +1</td>
+                    <td class="px-4 py-3">2026-05-01</td>
+                    <td class="px-4 py-3">2026-11-01</td>
+                    <td class="px-4 py-3">$18,000</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-contrato" data-id="c1" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">Hexa Cloud</td>
+                    <td class="px-4 py-3">Aegis Support Bot</td>
+                    <td class="px-4 py-3">Triage, Escalamiento</td>
+                    <td class="px-4 py-3">2026-03-10</td>
+                    <td class="px-4 py-3">2026-09-10</td>
+                    <td class="px-4 py-3">$12,500</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-contrato" data-id="c2" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">North Metrics</td>
+                    <td class="px-4 py-3">Sentinel Ops Analyst</td>
+                    <td class="px-4 py-3">Anomalias, SLA, +1</td>
+                    <td class="px-4 py-3">2026-01-15</td>
+                    <td class="px-4 py-3">2026-07-15</td>
+                    <td class="px-4 py-3">$16,900</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-contrato" data-id="c3" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">Contoso Dev</td>
+                    <td class="px-4 py-3">Atlas Finance Advisor</td>
+                    <td class="px-4 py-3">Forecast, Riesgo</td>
+                    <td class="px-4 py-3">2025-11-01</td>
+                    <td class="px-4 py-3">2026-05-01</td>
+                    <td class="px-4 py-3">$10,300</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-contrato" data-id="c4" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="errores" data-section="Log de errores" class="scroll-mt-24 space-y-4 pb-8">
+            <h2 class="text-2xl font-semibold">Log de errores</h2>
+            <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <table class="min-w-full text-left text-sm">
+                <thead class="bg-slate-100 text-xs uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                  <tr>
+                    <th class="px-4 py-3">Timestamp</th>
+                    <th class="px-4 py-3">Agente</th>
+                    <th class="px-4 py-3">Tipo</th>
+                    <th class="px-4 py-3">Descripcion</th>
+                    <th class="px-4 py-3 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="error-e1" class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">2026-07-11 09:42</td>
+                    <td class="px-4 py-3">Sentinel Ops Analyst</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-rose-100 px-2 py-1 text-xs font-semibold text-rose-700 dark:bg-rose-900/30 dark:text-rose-300">Critico</span></td>
+                    <td class="px-4 py-3">Timeout en consulta de logs.</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-48 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-error" data-id="e1" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="resolver-error" data-id="e1" class="block w-full rounded-md px-3 py-2 text-left text-emerald-700 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="error-e2" class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">2026-07-11 08:59</td>
+                    <td class="px-4 py-3">Aegis Support Bot</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">Warning</span></td>
+                    <td class="px-4 py-3">Retraso en respuesta de API externa.</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-48 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-error" data-id="e2" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="resolver-error" data-id="e2" class="block w-full rounded-md px-3 py-2 text-left text-emerald-700 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="error-e3" class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">2026-07-11 08:41</td>
+                    <td class="px-4 py-3">Nexus Sales Copilot</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">Info</span></td>
+                    <td class="px-4 py-3">Reintento automatico completado.</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-48 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-error" data-id="e3" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="resolver-error" data-id="e3" class="block w-full rounded-md px-3 py-2 text-left text-emerald-700 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="error-e4" class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">2026-07-11 07:58</td>
+                    <td class="px-4 py-3">Sentinel Ops Analyst</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-rose-100 px-2 py-1 text-xs font-semibold text-rose-700 dark:bg-rose-900/30 dark:text-rose-300">Critico</span></td>
+                    <td class="px-4 py-3">Memoria excedida durante analisis.</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-48 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-error" data-id="e4" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="resolver-error" data-id="e4" class="block w-full rounded-md px-3 py-2 text-left text-emerald-700 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="error-e5" class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">2026-07-11 07:12</td>
+                    <td class="px-4 py-3">Atlas Finance Advisor</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">Warning</span></td>
+                    <td class="px-4 py-3">Fallback activado por datos incompletos.</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-48 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-error" data-id="e5" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="resolver-error" data-id="e5" class="block w-full rounded-md px-3 py-2 text-left text-emerald-700 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="error-e6" class="border-t border-slate-200 dark:border-slate-800">
+                    <td class="px-4 py-3">2026-07-11 06:50</td>
+                    <td class="px-4 py-3">Nexus Sales Copilot</td>
+                    <td class="px-4 py-3"><span class="rounded-full bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">Info</span></td>
+                    <td class="px-4 py-3">Sincronizacion de prompts completada.</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="relative inline-block text-left">
+                        <button data-dropdown-button class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⋮</button>
+                        <div data-dropdown-menu class="absolute right-0 z-10 mt-2 hidden w-48 rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button data-action="ver-error" data-id="e6" class="block w-full rounded-md px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                          <button data-action="resolver-error" data-id="e6" class="block w-full rounded-md px-3 py-2 text-left text-emerald-700 hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="toast" class="pointer-events-none fixed right-4 top-4 z-[60] hidden rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700 shadow-lg dark:border-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300"></div>
+
+    <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+      <button id="modalBackdrop" class="absolute inset-0 bg-slate-900/50" aria-label="Cerrar modal"></button>
+      <article class="relative z-10 w-full max-w-2xl rounded-xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900">
+        <header class="flex items-center justify-between border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+          <h3 id="modalTitle" class="text-lg font-semibold">Detalle</h3>
+          <button id="closeModalBtn" class="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800" aria-label="Cerrar">✕</button>
+        </header>
+        <div id="modalContent" class="max-h-[70vh] overflow-y-auto p-4 text-sm"></div>
+      </article>
+    </div>
+
+    <script>
+      const users = {
+        u1: { nombre: "Wendy Sanchez", email: "wendy@agencylabs.io", plan: "Enterprise", estado: "Activo", id: "USR-1001", alta: "2025-08-10", ultimo: "2026-07-11 09:10" },
+        u2: { nombre: "Diego Rivas", email: "diego@orbitcorp.app", plan: "Pro", estado: "Activo", id: "USR-1002", alta: "2025-11-03", ultimo: "2026-07-11 08:49" },
+        u3: { nombre: "Sofia Marin", email: "sofia@northmetrics.net", plan: "Starter", estado: "Pendiente", id: "USR-1003", alta: "2026-01-21", ultimo: "2026-07-10 20:43" },
+        u4: { nombre: "Camilo Vega", email: "camilo@contoso.dev", plan: "Enterprise", estado: "Inactivo", id: "USR-1004", alta: "2025-05-16", ultimo: "2026-06-28 11:02" },
+        u5: { nombre: "Lucia Aranda", email: "lucia@hexacloud.ai", plan: "Pro", estado: "Activo", id: "USR-1005", alta: "2026-02-14", ultimo: "2026-07-11 07:15" },
+      };
+
+      const agentPrompts = {
+        a1: "Eres Aegis Support Bot. Prioriza tickets por impacto, urgencia y cliente. Responde en formato JSON con severidad, categoria y accion recomendada.",
+        a2: "Eres Nexus Sales Copilot. Evalua prospectos, sugiere mensajes de outreach y propone siguiente accion comercial con razonamiento breve.",
+        a3: "Eres Sentinel Ops Analyst. Supervisa eventos en tiempo real, detecta anomalias y genera alertas con evidencia tecnica y nivel de riesgo.",
+        a4: "Eres Atlas Finance Advisor. Analiza flujo de caja, pronostica variaciones y recomienda acciones para preservar margen operativo.",
+      };
+
+      const skills = {
+        s1: { nombre: "Triage de tickets", detalle: "Casos de uso: clasificacion de incidencias, asignacion automatica y priorizacion por SLA. Parametros: severidad, servicio, impacto." },
+        s2: { nombre: "Scoring de leads", detalle: "Casos de uso: calificacion de leads entrantes y prediccion de conversion. Parametros: industria, tamano, etapa, engagement." },
+        s3: { nombre: "Monitoreo de anomalias", detalle: "Casos de uso: deteccion de picos inusuales de errores, latencia y eventos. Parametros: ventana temporal, umbral, sensibilidad." },
+        s4: { nombre: "Forecast financiero", detalle: "Casos de uso: proyeccion de ingresos y costos por contrato. Parametros: horizonte, estacionalidad, escenario de riesgo." },
+      };
+
+      const contracts = {
+        c1: {
+          cliente: "Orbit Corp",
+          agente: "Nexus Sales Copilot",
+          inicio: "2026-05-01",
+          fin: "2026-11-01",
+          skills: [
+            { nombre: "Scoring de leads", precio: 7000 },
+            { nombre: "Outreach personalizado", precio: 6000 },
+            { nombre: "Seguimiento multicanal", precio: 5000 },
+          ],
+        },
+        c2: {
+          cliente: "Hexa Cloud",
+          agente: "Aegis Support Bot",
+          inicio: "2026-03-10",
+          fin: "2026-09-10",
+          skills: [
+            { nombre: "Triage de tickets", precio: 6500 },
+            { nombre: "Escalamiento automatico", precio: 6000 },
+          ],
+        },
+        c3: {
+          cliente: "North Metrics",
+          agente: "Sentinel Ops Analyst",
+          inicio: "2026-01-15",
+          fin: "2026-07-15",
+          skills: [
+            { nombre: "Monitoreo de anomalias", precio: 7500 },
+            { nombre: "Alertas de SLA", precio: 5400 },
+            { nombre: "Diagnostico de logs", precio: 4000 },
+          ],
+        },
+        c4: {
+          cliente: "Contoso Dev",
+          agente: "Atlas Finance Advisor",
+          inicio: "2025-11-01",
+          fin: "2026-05-01",
+          skills: [
+            { nombre: "Forecast financiero", precio: 5300 },
+            { nombre: "Riesgo de caja", precio: 5000 },
+          ],
+        },
+      };
+
+      const errors = {
+        e1: "TimeoutError: query exceeded 30s at LogsService.fetch()\n    at runBatch (/app/services/logs.js:118:16)\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
+        e2: "ApiLatencyWarning: External CRM responded in 4120ms\n    at SalesConnector.syncLead (/app/connectors/crm.js:73:9)",
+        e3: "RetryInfo: lead sync succeeded on attempt #2\n    at SalesConnector.syncLead (/app/connectors/crm.js:91:5)",
+        e4: "MemoryError: heap usage exceeded safety threshold\n    at Analyzer.run (/app/ops/analyzer.js:203:13)",
+        e5: "DataWarning: fallback projection used due to missing fields\n    at FinanceEngine.project (/app/finance/engine.js:58:11)",
+        e6: "SyncInfo: prompt templates synchronized successfully\n    at PromptService.sync (/app/prompts/service.js:37:7)",
+      };
+
+      const html = document.documentElement;
+      const themeToggle = document.getElementById("themeToggle");
+      const themeLabel = document.getElementById("themeLabel");
+      const themeIcon = document.getElementById("themeIcon");
+
+      function setTheme(dark) {
+        html.classList.toggle("dark", dark);
+        localStorage.setItem("agenthub-theme", dark ? "dark" : "light");
+        themeLabel.textContent = dark ? "Modo claro" : "Modo oscuro";
+        themeIcon.textContent = dark ? "☀️" : "🌙";
+      }
+
+      setTheme(localStorage.getItem("agenthub-theme") === "dark");
+      themeToggle.addEventListener("click", () => setTheme(!html.classList.contains("dark")));
+
+      const sidebar = document.getElementById("sidebar");
+      const sidebarBackdrop = document.getElementById("mobileSidebarBackdrop");
+      const openSidebarBtn = document.getElementById("openSidebarBtn");
+
+      function closeSidebar() {
+        sidebar.classList.add("-translate-x-full");
+        sidebarBackdrop.classList.add("hidden");
+      }
+
+      function openSidebar() {
+        sidebar.classList.remove("-translate-x-full");
+        sidebarBackdrop.classList.remove("hidden");
+      }
+
+      openSidebarBtn.addEventListener("click", openSidebar);
+      sidebarBackdrop.addEventListener("click", closeSidebar);
+      document.querySelectorAll("[data-nav-link]").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (window.innerWidth < 768) closeSidebar();
+        });
+      });
+
+      let openMenu = null;
+
+      function closeAllMenus() {
+        document.querySelectorAll("[data-dropdown-menu]").forEach((menu) => menu.classList.add("hidden"));
+        openMenu = null;
+      }
+
+      document.addEventListener("click", (event) => {
+        const btn = event.target.closest("[data-dropdown-button]");
+        const action = event.target.closest("[data-action]");
+        const insideMenu = event.target.closest("[data-dropdown-menu]");
+
+        if (btn) {
+          const menu = btn.nextElementSibling;
+          const shouldOpen = menu.classList.contains("hidden");
+          closeAllMenus();
+          if (shouldOpen) {
+            menu.classList.remove("hidden");
+            openMenu = menu;
+          }
+          return;
+        }
+
+        if (action) {
+          handleAction(action.dataset.action, action.dataset.id);
+          closeAllMenus();
+          return;
+        }
+
+        if (!insideMenu) closeAllMenus();
+      });
+
+      const modal = document.getElementById("modal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalContent = document.getElementById("modalContent");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+      const modalBackdrop = document.getElementById("modalBackdrop");
+
+      function openModal(title, content, wide = false) {
+        modalTitle.textContent = title;
+        modalContent.innerHTML = content;
+        modal.querySelector("article").classList.toggle("max-w-4xl", wide);
+        modal.querySelector("article").classList.toggle("max-w-2xl", !wide);
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function closeModal() {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+
+      closeModalBtn.addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", closeModal);
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeModal();
+          closeAllMenus();
+        }
+      });
+
+      const toast = document.getElementById("toast");
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.remove("hidden");
+        setTimeout(() => toast.classList.add("hidden"), 1800);
+      }
+
+      function currency(value) {
+        return "$" + value.toLocaleString("en-US");
+      }
+
+      function handleAction(action, id) {
+        if (action === "ver-usuario") {
+          const u = users[id];
+          openModal(
+            "Detalle de usuario",
+            `<dl class="grid grid-cols-1 gap-3 md:grid-cols-2">
+              <div><dt class="text-slate-500 dark:text-slate-400">Nombre</dt><dd class="font-semibold">${u.nombre}</dd></div>
+              <div><dt class="text-slate-500 dark:text-slate-400">Email</dt><dd class="font-semibold">${u.email}</dd></div>
+              <div><dt class="text-slate-500 dark:text-slate-400">Plan</dt><dd class="font-semibold">${u.plan}</dd></div>
+              <div><dt class="text-slate-500 dark:text-slate-400">Estado</dt><dd class="font-semibold">${u.estado}</dd></div>
+              <div><dt class="text-slate-500 dark:text-slate-400">ID</dt><dd class="font-semibold">${u.id}</dd></div>
+              <div><dt class="text-slate-500 dark:text-slate-400">Fecha de alta</dt><dd class="font-semibold">${u.alta}</dd></div>
+              <div class="md:col-span-2"><dt class="text-slate-500 dark:text-slate-400">Ultimo acceso</dt><dd class="font-semibold">${u.ultimo}</dd></div>
+            </dl>`
+          );
+          return;
+        }
+
+        if (action === "configurar-agente") {
+          openModal(
+            "Configuracion de agente",
+            `<label class="mb-2 block text-sm font-semibold">Prompt de sistema</label>
+             <textarea class="h-64 w-full rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs leading-6 text-slate-800 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100">${agentPrompts[id]}</textarea>
+             <div class="mt-3 text-xs text-slate-500 dark:text-slate-400">Editable para simular ajustes de comportamiento.</div>`,
+            true
+          );
+          return;
+        }
+
+        if (action === "ver-skill") {
+          const s = skills[id];
+          openModal("Detalle de skill", `<h4 class="mb-2 text-base font-semibold">${s.nombre}</h4><p class="leading-6 text-slate-700 dark:text-slate-300">${s.detalle}</p>`);
+          return;
+        }
+
+        if (action === "eliminar-skill") {
+          showToast("Skill eliminada (simulacion)");
+          return;
+        }
+
+        if (action === "ver-contrato") {
+          const c = contracts[id];
+          const subtotal = c.skills.reduce((sum, item) => sum + item.precio, 0);
+          const skillsRows = c.skills
+            .map(
+              (item) =>
+                `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="px-3 py-2">${item.nombre}</td><td class="px-3 py-2 text-right">${currency(item.precio)}</td></tr>`
+            )
+            .join("");
+
+          openModal(
+            "Detalle de contrato",
+            `<div class="mb-4 grid gap-2 md:grid-cols-2">
+              <p><span class="text-slate-500 dark:text-slate-400">Cliente:</span> <strong>${c.cliente}</strong></p>
+              <p><span class="text-slate-500 dark:text-slate-400">Agente:</span> <strong>${c.agente}</strong></p>
+              <p><span class="text-slate-500 dark:text-slate-400">Inicio:</span> <strong>${c.inicio}</strong></p>
+              <p><span class="text-slate-500 dark:text-slate-400">Fin:</span> <strong>${c.fin}</strong></p>
+            </div>
+            <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-100 dark:bg-slate-800"><tr><th class="px-3 py-2 text-left">Skill</th><th class="px-3 py-2 text-right">Precio</th></tr></thead>
+                <tbody>${skillsRows}</tbody>
+                <tfoot class="bg-slate-50 dark:bg-slate-800/50">
+                  <tr><td class="px-3 py-2 font-semibold">Subtotal</td><td class="px-3 py-2 text-right font-semibold">${currency(subtotal)}</td></tr>
+                  <tr><td class="px-3 py-2 font-semibold">Total final</td><td class="px-3 py-2 text-right font-semibold">${currency(subtotal)}</td></tr>
+                </tfoot>
+              </table>
+            </div>`
+          );
+          return;
+        }
+
+        if (action === "ver-error") {
+          openModal(
+            "Detalle de error",
+            `<pre class="overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-6 text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100">${errors[id]}</pre>`
+          );
+          return;
+        }
+
+        if (action === "resolver-error") {
+          const row = document.getElementById(`error-${id}`);
+          if (!row) return;
+          if (row.dataset.resolved === "1") return;
+          row.dataset.resolved = "1";
+          row.classList.add("opacity-60");
+          const typeCell = row.children[2];
+          typeCell.innerHTML = '<span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">Resuelto</span>';
+          showToast("Error marcado como resuelto");
+          return;
+        }
+
+        if (action === "eliminar") {
+          showToast("Accion de eliminacion simulada");
+        }
+      }
+
+      document.querySelectorAll("[data-collapse-button]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.target);
+          const icon = button.querySelector("[data-collapse-icon]");
+          const expanded = target.classList.contains("max-h-48");
+
+          if (expanded) {
+            target.classList.remove("max-h-48", "opacity-100");
+            target.classList.add("max-h-0", "opacity-0");
+            icon.classList.remove("rotate-180");
+          } else {
+            target.classList.remove("max-h-0", "opacity-0");
+            target.classList.add("max-h-48", "opacity-100");
+            icon.classList.add("rotate-180");
+          }
+        });
+      });
+
+      const navLinks = Array.from(document.querySelectorAll("[data-nav-link]"));
+      const activeTitle = document.getElementById("activeSectionTitle");
+
+      function setActiveSection(id, name) {
+        navLinks.forEach((link) => {
+          const active = link.getAttribute("href") === `#${id}`;
+          link.classList.toggle("bg-blue-50", active);
+          link.classList.toggle("text-blue-700", active);
+          link.classList.toggle("border-blue-600", active);
+          link.classList.toggle("dark:bg-blue-900/30", active);
+          link.classList.toggle("dark:text-blue-300", active);
+          link.classList.toggle("border-transparent", !active);
+        });
+        activeTitle.textContent = name;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id, entry.target.dataset.section);
+            }
+          });
+        },
+        { rootMargin: "-35% 0px -55% 0px", threshold: 0.1 }
+      );
+
+      document.querySelectorAll("section[data-section]").forEach((section) => observer.observe(section));
+      setActiveSection("dashboard", "Dashboard");
+    </script>
+  </body>
+</html>
